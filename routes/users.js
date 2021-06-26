@@ -7,7 +7,7 @@ const User = require('../models/user');
 const Role = require('../models/role');
 
 //Register
-router.post('/register', (req, res, next) => {
+router.post('/register', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -29,7 +29,7 @@ router.post('/register', (req, res, next) => {
 });
 
 //Authenticate
-router.post('/authenticate', (req, res, next) => {
+router.post('/authenticate',  (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 

@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const MediaFile = require('../models/mediaFile');
+const passport = require('passport');
 
 //Add
-router.post('/add', (req, res, next) => {
+router.post('/add', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+
+
     let newMediaFile = new MediaFile({
         _id: req.body.MediaFile_id,
         filename: req.body.filename,
@@ -24,18 +27,18 @@ router.post('/add', (req, res, next) => {
 });
 
 //Find mediaFile
-router.get('/', async (req, res, next) => {
+router.get('/', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     res.status(200).send(await MediaFile.find())
 });
 
 //Find by Id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     const mediaFile = await MediaFile.findById(req.params.id);
     res.status(200).send(mediaFile)
 });
 
 //Delete
-router.post('/delete', async (req, res, next) => {
+router.post('/delete', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     await MediaFile.findByIdAndDelete(
         { _id: req.query.id },
         (err, result) => {

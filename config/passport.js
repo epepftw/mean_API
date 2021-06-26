@@ -4,6 +4,7 @@ const User = require('../models/user');
 const config = require('../config/database');
 
 module.exports = function(passport){
+    console.log('HGIT')
     let opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
     opts.secretOrKey = config.secret;
@@ -12,6 +13,7 @@ module.exports = function(passport){
             if(err) {
                 return done(err, false);
             }
+
             if(user){
                 return done(null, user);
             }else{
