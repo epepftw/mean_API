@@ -13,13 +13,16 @@ router.post('/register', passport.authenticate('jwt', {session:false}), (req, re
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
-        role_id: req.body.role_id
+        phone: req.body.phone,
+        role_id: req.body.role_id,
+        address: req.body.address
     });
 
     console.log('User', User, newUser)
 
     User.addUser(newUser, (err, user) => {
         if(err){
+            console.log(err)
             res.json({success: false, msg:'Failed to register user'});
         }
         else{
@@ -69,6 +72,10 @@ router.post('/authenticate',  (req, res, next) => {
         });
     });
 });
+
+router.get('/', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
+    res.status(200).send(await User.find())
+})
 
 //Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
