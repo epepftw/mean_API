@@ -6,24 +6,31 @@ const passport = require('passport');
 
 //Add
 router.post('/add', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    try {
+        // Checker
+        if (typeof(req.body) == 'object' && req.body.length > 0) {
+            
+            // Loop thru req.body to construct Media Model
+            req.body.forEach(async (item) => {
 
-
-    let newMediaFile = new MediaFile({
-        _id: req.body.MediaFile_id,
-        filename: req.body.filename,
-        file_url: req.body.file_url,
-        uploaded_by: req.body.uploaded_by,
-        date_uploaded: req.body.date_uploaded
-    });
-    console.log('MediaFile', MediaFile, newMediaFile)
-
-    MediaFile.addMediaFile(newMediaFile, (err, MediaFile) => {
-        if(err){
-            res.json({success: false, msg:'Failed to add MediaFile'});
-        }else{
+                // 1. Structure the Media File Model
+                let newMediaFile = new MediaFile({
+                    filename: item.filename,
+                    file_url: item.file_url,
+                    uploaded_by: item.uploaded_by,
+                });
+        
+        
+                // 2. Save the structured Media Model
+                await MediaFile.addMediaFile(newMediaFile);
+            })
+            
             res.json({success: true, msg:'MediaFile added'});
         }
-    });
+    }   catch (error) {
+            console.log('Error on Saving Media File Info', error)
+            res.json({success: false, msg:'Failed to add MediaFile'})
+    }
 });
 
 //Find mediaFile
@@ -50,5 +57,6 @@ router.post('/delete', passport.authenticate('jwt', {session:false}), async (req
         }
     );
 });
+
 
 module.exports = router;

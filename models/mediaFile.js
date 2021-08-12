@@ -14,11 +14,6 @@ const  MediaFileSchema = mongoose.Schema({
     uploaded_by: {
         type: String,
         required: true
-    },
-    date_uploaded: {
-        type: String,
-        required: true
-        
     }
 });
 
