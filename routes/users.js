@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 const Role = require('../models/role');
+const mongoose = require('mongoose');
 
 //Register
 router.post('/register', passport.authenticate('jwt', {session:false}), (req, res, next) => {
@@ -15,6 +16,7 @@ router.post('/register', passport.authenticate('jwt', {session:false}), (req, re
         password: req.body.password,
         phone: req.body.phone,
         role_id: req.body.role_id,
+        role_name: req.body.role_name,
         address: req.body.address
     });
 
@@ -73,8 +75,36 @@ router.post('/authenticate',  (req, res, next) => {
     });
 });
 
+//Users
 router.get('/', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
-    res.status(200).send(await User.find())
+    // res.status(200).send(await User.find())
+
+    const users = await User.aggregate([
+        {
+            $lookup: {
+                from: 'roles',
+                localField: 'role_id',
+                foreignField: 'refId',
+                as: 'roleDetails'
+            }
+        }
+    ])
+
+    res.status(200).send(users)
+})
+
+//Advertisers
+router.get('/advertisers', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
+    try{
+        // Get Advertiser Info
+        const advertiser = await User.find({"role_name" : "Advertiser"})
+        res.status(200).send(advertiser)
+    } 
+    
+    catch(error) {
+        console.log(error)
+        res.status(500).send({ message: 'wrong'})
+    }
 })
 
 //Profile

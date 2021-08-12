@@ -30,14 +30,10 @@ router.post('/add', passport.authenticate('jwt', {session:false}), async (req, r
             });
 
             // Submit
-            await Key.addKey(newKey, (err, Key) => {
-                if(err){
-                    throw(err)
-                }
-            });
+            await Key.addKey(newKey);
         }
 
-        res.json({success: true, msg:`Keys Created for ${req.query.advertiserId}`});
+        res.json({success: true, msg:`${req.query.count} keys Created for ${advertiser.name}`});
     } catch(error){
         console.log(error)
         res.status(500).send({ message: 'Server'})
@@ -45,11 +41,16 @@ router.post('/add', passport.authenticate('jwt', {session:false}), async (req, r
     
 });
 
-//Find by Id
+router.get('/', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
+    res.status(200).send(await Key.find().sort({ 'advertiser.name' : "asc" }))
+})
+
 router.get('/:id', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     const role = await Key.findById(req.params.id);
     res.status(200).send(role)
 });
+
+
 
 //delete
 router.post('/delete', passport.authenticate('jwt', {session:false}), async (req, res, next) => {

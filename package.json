@@ -17,7 +17,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-jwt": "*",
-    "uuid": "^8.3.2"
+    "uuidv4": "^6.2.11"
   },
   "author": "Efraim Gabuat",
   "license": "ISC"
