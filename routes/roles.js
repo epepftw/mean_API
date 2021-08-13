@@ -2,22 +2,23 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Role = require('../models/role');
+const passport = require('passport');
 
 
 //Find role
-router.get('/', async (req, res, next) => {
+router.get('/', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     res.status(200).send(await Role.find())
 });
 
 //Find by Id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     const role = await Role.findById(req.params.id);
     res.status(200).send(role)
 });
 
 
 //Edit
-router.post('/edit', async(req, res, next) => {
+router.post('/edit', passport.authenticate('jwt', {session:false}), async(req, res, next) => {
     console.log(req.body);
     await Role.findByIdAndUpdate(
         { _id: req.body.role_id },
@@ -33,7 +34,7 @@ router.post('/edit', async(req, res, next) => {
 });
 
 //Delete
-router.post('/delete', async (req, res, next) => {
+router.post('/delete', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     console.log(req.body);
     await Role.findByIdAndDelete(
         { _id: req.body.role_id },
@@ -50,7 +51,7 @@ router.post('/delete', async (req, res, next) => {
 
 
 //Add
-router.post('/add', (req, res, next) => {
+router.post('/add', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     let newRole = new Role({
         _id: req.body.role_id,
         role_name: req.body.role_name,

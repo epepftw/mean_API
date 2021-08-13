@@ -15,9 +15,10 @@
     "express": "*",
     "jsonwebtoken": "*",
     "mongoose": "*",
+    "morgan": "^1.10.0",
     "passport": "*",
     "passport-jwt": "*",
-    "uuid": "^8.3.2"
+    "uuidv4": "^6.2.11"
   },
   "author": "Efraim Gabuat",
   "license": "ISC"

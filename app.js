@@ -24,7 +24,7 @@ const app = express();
 //user route
 const users = require('./routes/users');
 
-//role routes
+//role routess
 const roles = require('./routes/roles');
 
 //mediafile routes

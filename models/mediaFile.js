@@ -15,10 +15,17 @@ const  MediaFileSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    date_uploaded: {
+    user_id: {
         type: String,
         required: true
-        
+    },
+    mimetype: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: Number,
+        required: true
     }
 });
 

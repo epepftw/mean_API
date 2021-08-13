@@ -7,6 +7,16 @@ const KeyFileSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    advertiser: {
+        id: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        }
+    },
     isActive: {
         type: Boolean,
         default: false
@@ -20,8 +30,15 @@ const KeyFileSchema = mongoose.Schema({
         required: true
     },
     createdBy: {
-        type: String,
-        required: true
+        id: {
+            type: String,
+            required: true
+        },
+        name:{
+            type: String,
+            required: true
+        }
+        
     }
 });
 
