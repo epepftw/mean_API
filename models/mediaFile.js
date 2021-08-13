@@ -14,6 +14,18 @@ const  MediaFileSchema = mongoose.Schema({
     uploaded_by: {
         type: String,
         required: true
+    },
+    user_id: {
+        type: String,
+        required: true
+    },
+    mimetype: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: Number,
+        required: true
     }
 });
 

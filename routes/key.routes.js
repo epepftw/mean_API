@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Key = require('../models/key');
-const Users = require('../models/user');
+const User = require('../models/user');
 const { v4: uuidv4 } = require('uuid');
 const passport = require('passport');
 
@@ -10,7 +10,7 @@ const passport = require('passport');
 router.post('/add', passport.authenticate('jwt', {session:false}), async (req, res, next) => {
     try{
         // Get Advertiser Info
-        const advertiser = await Users.findById(req.query.advertiserId)
+        const advertiser = await User.findById(req.query.advertiserId)
 
         for (let x = 1; x <= req.query.count; x++) {
             // Structure Payload
