@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "bcryptjs": "*",
@@ -19,6 +19,9 @@
     "passport": "*",
     "passport-jwt": "*",
     "uuidv4": "^6.2.11"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "author": "Efraim Gabuat",
   "license": "ISC"
