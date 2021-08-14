@@ -6,19 +6,19 @@ const passport = require('passport');
 const mongoose = require ('mongoose');
 const config = require('./config/database');
 
-//mongoose database
-mongoose.connect(config.database);
+// //mongoose database
+// mongoose.connect(config.database);
 
-//on connection
-mongoose.connection.on('connected', () => {
-    console.log('Connected to database '+config.database);
-});
-//On error
-mongoose.connection.on('error', (err) => {
-    console.log('Database error '+err);
-});
+// //on connection
+// mongoose.connection.on('connected', () => {
+//     console.log('Connected to database '+config.database);
+// });
+// //On error
+// mongoose.connection.on('error', (err) => {
+//     console.log('Database error '+err);
+// });
 
-//express
+// //express
 const app = express();
 
 //user route
